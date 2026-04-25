@@ -1,0 +1,8 @@
+# backend/pyproject.toml
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths    = ["tests"]
+
+[tool.pytest.ini_options.markers]
+asyncio = "mark test as async"
