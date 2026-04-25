@@ -3,7 +3,7 @@
 // Llama al backend POST /triage y devuelve el resultado.
 
 import { useState } from "react";
-import { submitTriage, type TriagePayload, type TriageResponse } from "@/services/api";
+import { submitTriage, type TriagePayload, type TriageResponse } from "@/api/client";
 
 interface UseTriageReturn {
   result: TriageResponse | null;

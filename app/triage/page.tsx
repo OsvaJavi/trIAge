@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import PatientForm from "@/components/PatientForm";
-import TriageResult from "@/components/TriageResult";
+import PatientForm from "@/components/TriageForm";
+import TriageResult from "@/components/PatientCard";
 import type { Patient, Priority } from "@/app/page";
 
 function classifyLocally(

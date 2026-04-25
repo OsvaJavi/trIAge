@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import QueueBoard from "@/components/QueueBoard";
-import TriageResult from "@/components/TriageResult";
+import TriageResult from "@/components/PatientCard";
 import type { Patient } from "@/app/page";
 
 const MOCK_PATIENTS: Patient[] = [

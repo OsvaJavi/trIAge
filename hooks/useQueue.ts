@@ -3,7 +3,7 @@
 // Cuando el backend esté listo, descomenta `fetchQueue()` y quita el mock.
 
 import { useEffect, useRef, useState } from "react";
-import { fetchQueue, type QueuePatient } from "@/services/api";
+import { fetchQueue, type QueuePatient } from "@/api/client";
 
 interface UseQueueOptions {
   /** Intervalo de polling en ms. Default: 5000 */
