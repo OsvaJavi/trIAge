@@ -84,7 +84,7 @@ class QueueResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 class QueueEntryUpdate(BaseModel):
-    status: str = Field(..., pattern="^(esperando|en_progreso|hecho)$")
+    status: str = Field(..., pattern="^(waiting|in_progress|done)$")
 
 class QueueSummary(BaseModel):
     total_waiting: int
