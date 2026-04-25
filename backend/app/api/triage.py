@@ -23,15 +23,14 @@ async def triage_patient(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Classify a patient's urgency level using AI and add them to the queue.
-    Does NOT diagnose. Does NOT suggest treatment.
-    Returns a triage level 1–5 with clinical reasoning.
+    Clasificar la urgencia del paciete usando IA y añadirlos a la cola de espera.
+    Devuelve como resultado un numero del 1 al 5 con razonamiento clinico
     """
 
-    # 1. AI classification
+    # 1. Clasificación AI 
     raw_result = await classify_patient(payload)
 
-    # 2. Validate + sanitize LLM output (never trust raw model JSON)
+    # Vliadar + limpiar el output del LLM (no confiar en el modelo en raw JSON)
     triage_result = validate_triage_output(raw_result)
     if not triage_result:
         raise TriageException(
@@ -40,20 +39,20 @@ async def triage_patient(
             code="AI_INVALID_OUTPUT",
         )
 
-    # 3. Persist patient + triage result
+    # Paciente persistente + resultado del triage
     patient = await create_patient(db, payload, triage_result)
 
-    # 4. Add to priority queue
+    # Añador a la cola de prioridad
     queue_entry = await enqueue_patient(db, patient.id, triage_result.priority)
 
-    # 5. Build event hash (off-chain — no medical data goes to blockchain)
+    # Construir el hash de eventos ("off chain"sin datos medicos) 
     event_hash = build_event_hash({
         "patient_id": str(patient.id),
         "priority":   triage_result.priority,
         "timestamp":  datetime.utcnow().isoformat(),
     })
 
-    # 6. Log hash to Monad asynchronously — never blocks the response
+    # Logear el hash a monad de forma asincronoca - no bloquear la respuesta
     background_tasks.add_task(log_hash_to_chain, event_hash)
 
     return TriageResponse(
